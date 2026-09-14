@@ -22,9 +22,7 @@ The rest of this article is about the architecture that came out of treating the
 ## AI Observability: treating AI applications as first-class citizens in the trace store
 
 The instinct when a new class of application shows up is to bolt a metric onto an existing dashboard. That doesn't hold up here, because the unit of work itself has changed. A single user request into a RAG or multi-agent application can fan out into a dozen internal steps — retrieval, several sequential or parallel model calls, tool invocations, result synthesis — each with its own latency, token cost, and independent chance of failure. Collapsing all of that into one opaque "request," the way a conventional APM trace would, throws away exactly the information needed to debug it.
-
 <img width="1800" height="1120" alt="seven-layer-architecture" src="https://github.com/user-attachments/assets/0fee0fa1-8f8c-4ffc-baaf-b46af101341a" />
-
 
 **Collection.** Instrumentation covers Python, Node.js, and Java, with automatic adaptation for common model-native APIs and out-of-the-box support for LangChain, LangGraph, Dify, and OpenClaw, among other agent frameworks. It's non-invasive — for a framework that's already supported, there's no code change required to start collecting data, which matters more than it might sound: requiring every team to hand-instrument their LangGraph pipeline before they get any observability is a real adoption barrier, not a minor inconvenience. Collection also speaks OpenTelemetry natively — Traces, Metrics, and Logs travel over OTLP — so AI telemetry isn't a second, proprietary data path sitting next to whatever teams already run for the rest of their stack.
 
@@ -61,9 +59,7 @@ The intended audience is deliberately broad: not just the on-call engineer who a
 SmartAsk gets you an answer. Bonree ONE·Sage AI is built to go further — from a natural-language description of a problem or task to actually carrying it out, using models, tools, knowledge bases, skills, and pre-built or custom agents behind a single conversational interface. The framing we use internally is that this is meant to be the difference between AI as a tool you operate and AI as a colleague that operates alongside you — a distinction that sounds like marketing language until you look at what it requires architecturally, which is considerably more than a chat UI in front of an LLM.
 
 **Layered architecture.** Bonree ONE·Sage AI is built as seven layers, each addressing a distinct concern:
-
 <img width="1800" height="920" alt="request-fanout (1)" src="https://github.com/user-attachments/assets/d5e52aae-ce04-4372-95ae-9d4d28686a28" />
-
 1. *Data source layer* — observability signals (logs, metrics, traces, alerts, events), operational assets (CMDB, runbooks/knowledge bases, ITSM tickets), and file assets (scripts, environment variables, credentials). All three categories are treated as inputs an agent might need, not just telemetry.
 2. *Connector layer* — the Model Context Protocol (MCP) as the standard channel for agent-to-tool and agent-to-system communication, connecting to CMDB and ticketing systems; a CLI layer that does pre-processing before data reaches the model, specifically to reduce how many tokens MCP calls consume — a detail worth noting because it's a direct response to the cost problem described earlier, not a generic engineering nicety; plus conventional API and script access.
 3. *Security review layer* — every signal and asset entering the system goes through specification validation, permission checks, and a security review before it's usable, and this is deliberately the first line of defense, not a step bolted on after something is already running.
