@@ -39,7 +39,7 @@ Given that mapping work, "out-of-the-box support for framework X" in an observab
 
 ## Where Bonree ONE fits
 
-Bonree ONE 4.0's AI Observability capability instruments Python, Node.js, and Java applications, with automatic adaptation for common model-native APIs and out-of-the-box support for LangChain, LangGraph, Dify, and OpenClaw, among other frameworks. See Bonree | AI Observability and the post Building AI Observability for the Native Stack: Architecture Design and Engineering Practice from Bonree ONE 4.0 - DEV Community for the underlying architecture.
+Bonree ONE 4.0's AI Observability capability instruments Python, Node.js, and Java applications, with automatic adaptation for common model-native APIs and out-of-the-box support for LangChain, LangGraph, Dify, and OpenClaw, among other frameworks.
 
 ## A question for readers
 
