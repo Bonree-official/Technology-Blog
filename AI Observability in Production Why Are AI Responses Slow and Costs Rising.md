@@ -2,7 +2,7 @@
 
 A risk-based roadmap for deciding **what to hand to AI agents in IT operations first, and what to keep human-approved**.
 
-![Adoption roadmap for agentic AI operations](images/topicB_github.png)
+![Adoption roadmap for agentic AI operations](/assets/topicB_github.png)
 
 ## What this is
 
